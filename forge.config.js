@@ -1,6 +1,7 @@
 module.exports = {
     packagerConfig: {
-        name: 'Cursor',
+        // https://github.com/electron-userland/electron-installer-debian/issues/175#issuecomment-686982454
+        name: 'cursor',
         icon: 'assets/icon/icon',
         extraResource: [
             './lsp',
@@ -15,29 +16,33 @@ module.exports = {
                 schemes: ['electron-fiddle'],
             },
         ],
+        // https://electron.github.io/electron-packager/main/interfaces/electronpackager.options.html#executablename
+        // executableName: 'Cursor',
     },
     rebuildConfig: {},
     makers: [
         {
+            // https://www.electronforge.io/config/makers/squirrel.windows
             name: '@electron-forge/maker-squirrel',
-            config: {},
         },
         {
+            // https://www.electronforge.io/config/makers/zip
             name: '@electron-forge/maker-zip',
-            platforms: ['darwin'],
         },
         {
+            // https://www.electronforge.io/config/makers/rpm
+            name: '@electron-forge/maker-rpm',
+            platforms: ['linux'],
+        },
+        {
+            // https://www.electronforge.io/config/makers/deb
             name: '@electron-forge/maker-deb',
+            platforms: ['linux'],
             config: {
                 options: {
+                    mimeType: ['x-scheme-handler/electron-fiddle'],
                     icon: 'assets/icon/icon.png',
                 },
-            },
-        },
-        {
-            name: '@electron-forge/maker-deb',
-            config: {
-                mimeType: ['x-scheme-handler/electron-fiddle'],
             },
         },
     ],
